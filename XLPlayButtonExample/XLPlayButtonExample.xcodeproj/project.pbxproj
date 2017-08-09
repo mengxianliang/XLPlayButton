@@ -13,6 +13,7 @@
 		5E6F7C921F3ADF04003AF9FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E6F7C901F3ADF04003AF9FB /* Main.storyboard */; };
 		5E6F7C941F3ADF04003AF9FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E6F7C931F3ADF04003AF9FB /* Assets.xcassets */; };
 		5E6F7C971F3ADF04003AF9FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E6F7C951F3ADF04003AF9FB /* LaunchScreen.storyboard */; };
+		5E6F7CA41F3AF8DB003AF9FB /* XLPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F7CA31F3AF8DB003AF9FB /* XLPlayButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		5E6F7C931F3ADF04003AF9FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5E6F7C961F3ADF04003AF9FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5E6F7C981F3ADF04003AF9FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E6F7CA21F3AF8DB003AF9FB /* XLPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLPlayButton.h; sourceTree = "<group>"; };
+		5E6F7CA31F3AF8DB003AF9FB /* XLPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLPlayButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +45,7 @@
 		5E6F7C7B1F3ADF04003AF9FB = {
 			isa = PBXGroup;
 			children = (
+				5E6F7CA11F3AF8DB003AF9FB /* XLPlayButton */,
 				5E6F7C861F3ADF04003AF9FB /* XLPlayButtonExample */,
 				5E6F7C851F3ADF04003AF9FB /* Products */,
 			);
@@ -77,6 +81,15 @@
 				5E6F7C881F3ADF04003AF9FB /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E6F7CA11F3AF8DB003AF9FB /* XLPlayButton */ = {
+			isa = PBXGroup;
+			children = (
+				5E6F7CA21F3AF8DB003AF9FB /* XLPlayButton.h */,
+				5E6F7CA31F3AF8DB003AF9FB /* XLPlayButton.m */,
+			);
+			path = XLPlayButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +167,7 @@
 				5E6F7C8F1F3ADF04003AF9FB /* ViewController.m in Sources */,
 				5E6F7C8C1F3ADF04003AF9FB /* AppDelegate.m in Sources */,
 				5E6F7C891F3ADF04003AF9FB /* main.m in Sources */,
+				5E6F7CA41F3AF8DB003AF9FB /* XLPlayButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +326,7 @@
 				5E6F7C9D1F3ADF04003AF9FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
