@@ -3,8 +3,6 @@
 
 ### 显示效果
 
-<img src="https://github.com/mengxianliang/XLPlayButton/blob/master/GIF/1.gif" width=335 height=254 />
-
 ![image](https://github.com/mengxianliang/XLPlayButton/blob/master/GIF/1.gif)
 
 ### 使用方法
