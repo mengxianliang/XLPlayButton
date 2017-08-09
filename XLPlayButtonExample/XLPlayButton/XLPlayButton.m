@@ -86,7 +86,10 @@ static CGFloat positionDuration = 0.3f;
     _leftLineLayer.lineWidth = [self lineWidth];
     _leftLineLayer.lineCap = kCALineCapRound;
     _leftLineLayer.lineJoin = kCALineJoinRound;
+    
     [self.layer addSublayer:_leftLineLayer];
+    
+    NSLog(@"_left.layer.positionY = %f",path.currentPoint.y);
 }
 
 /**
@@ -304,18 +307,16 @@ static CGFloat positionDuration = 0.3f;
     return strokeEndAnimation;
 }
 
-//线条宽度
+//线条宽度，根据按钮的宽度按比例设置
 - (CGFloat)lineWidth {
     return self.bounds.size.width * 0.2;
 }
 
-//加长
+//加长暂停竖线
 - (void)heigherLineLayer:(BOOL)heigher{
     CATransform3D t = CATransform3DIdentity;
     if (heigher) {
         t = CATransform3DScale(t, 1, 1.25, 0);
-        _leftLineLayer.position = CGPointMake(_leftLineLayer.position.x, -0.1*self.bounds.size.width);
-        _rightLineLayer.position = CGPointMake(_rightLineLayer.position.x, -0.1*self.bounds.size.width);
     } else {
         t = CATransform3DScale(t, 1, 1, 0);
     }
