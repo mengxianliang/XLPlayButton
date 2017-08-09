@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger,XLPlayButtonState) {
 @interface XLPlayButton : UIButton
 
 /**
- 是否正在播放，可以通过setter方式控制按钮动画
+ 通过setter方式控制按钮动画
  设置XLPlayButtonStatePlay显示播放按钮
  设置XLPlayButtonStatePause显示暂停按钮
  */
