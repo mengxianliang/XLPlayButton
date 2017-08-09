@@ -1,9 +1,9 @@
 //
 //  XLPlayButton.h
-//  爱奇艺播放按钮动画
+//  XLPlayButtonExample
 //
 //  Created by MengXianLiang on 2017/8/9.
-//  Copyright © 2017年 JWZT. All rights reserved.
+//  Copyright © 2017年 mxl. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
