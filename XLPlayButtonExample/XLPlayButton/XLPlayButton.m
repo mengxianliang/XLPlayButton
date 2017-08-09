@@ -8,17 +8,15 @@
 
 #import "XLPlayButton.h"
 
-//线条宽度
-static CGFloat lineWidth = 15.0f;
 //其它动画时长
 static CGFloat animationDuration = 0.5f;
 //位移动画时长
-static CGFloat positionDuration = 0.3;
+static CGFloat positionDuration = 0.3f;
 //线条颜色
 #define LineColor [UIColor colorWithRed:16/255.0 green:142/255.0 blue:233/255.0 alpha:1]
 //三角动画名称
 #define TriangleAnimation @"TriangleAnimation"
-#define leftLineAnimation @"leftLineAnimation"
+//右侧直线动画名称
 #define RightLineAnimation @"RightLineAnimation"
 
 @interface XLPlayButton ()<CAAnimationDelegate> {
@@ -77,7 +75,7 @@ static CGFloat positionDuration = 0.3;
     _leftLineLayer.path = path.CGPath;
     _leftLineLayer.fillColor = [UIColor clearColor].CGColor;
     _leftLineLayer.strokeColor = LineColor.CGColor;
-    _leftLineLayer.lineWidth = lineWidth;
+    _leftLineLayer.lineWidth = [self lineWidth];
     _leftLineLayer.lineCap = kCALineCapRound;
     _leftLineLayer.lineJoin = kCALineJoinRound;
     [self.layer addSublayer:_leftLineLayer];
@@ -100,7 +98,7 @@ static CGFloat positionDuration = 0.3;
     _triangleLayer.path = path.CGPath;
     _triangleLayer.fillColor = [UIColor clearColor].CGColor;
     _triangleLayer.strokeColor = LineColor.CGColor;
-    _triangleLayer.lineWidth = lineWidth;
+    _triangleLayer.lineWidth = [self lineWidth];
     _triangleLayer.lineCap = kCALineCapButt;
     _triangleLayer.lineJoin = kCALineJoinRound;
     _triangleLayer.strokeEnd = 0;
@@ -122,7 +120,7 @@ static CGFloat positionDuration = 0.3;
     _rightLineLayer.path = path.CGPath;
     _rightLineLayer.fillColor = [UIColor clearColor].CGColor;
     _rightLineLayer.strokeColor = LineColor.CGColor;
-    _rightLineLayer.lineWidth = lineWidth;
+    _rightLineLayer.lineWidth = [self lineWidth];
     _rightLineLayer.lineCap = kCALineCapRound;
     _rightLineLayer.lineJoin = kCALineJoinRound;
     [self.layer addSublayer:_rightLineLayer];
@@ -133,7 +131,6 @@ static CGFloat positionDuration = 0.3;
 - (void)addCircleLayer {
     
     CGFloat a = self.bounds.size.width;
-    
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(a*0.7,a*0.8)];
     [path addArcWithCenter:CGPointMake(a*0.5, a*0.8) radius:0.2*a startAngle:0 endAngle:M_PI clockwise:true];
@@ -142,7 +139,7 @@ static CGFloat positionDuration = 0.3;
     _circleLayer.path = path.CGPath;
     _circleLayer.fillColor = [UIColor clearColor].CGColor;
     _circleLayer.strokeColor = LineColor.CGColor;
-    _circleLayer.lineWidth = lineWidth;
+    _circleLayer.lineWidth = [self lineWidth];
     _circleLayer.lineCap = kCALineCapRound;
     _circleLayer.lineJoin = kCALineJoinRound;
     _circleLayer.strokeEnd = 0;
@@ -157,12 +154,17 @@ static CGFloat positionDuration = 0.3;
  执行正向动画，即暂停-》播放
  */
 - (void)actionPositiveAnimation {
+    //开始三角动画
     [self triangleAnimationFrome:0 to:1];
+    //开始右侧线条动画
     [self rightLineAnimationFrome:1 to:0];
+    //开始画弧动画
     [self circleEndAnimationFrome:0 to:1];
+    //开始逆向画弧动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         [self circleStartAnimationFrome:0 to:1];
     });
+    //开始左侧线条缩短动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         [self leftLineAnimationFrome:1 to:0];
     });
@@ -172,13 +174,15 @@ static CGFloat positionDuration = 0.3;
  执行逆向动画，即播放-》暂停
  */
 - (void)actionInverseAnimation {
+    //开始三角动画
     [self triangleAnimationFrome:1 to:0];
+    //开始左侧线条动画
     [self leftLineAnimationFrome:0 to:1];
-    
+    //执行画弧动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         [self circleStartAnimationFrome:1 to:0];
     });
-    
+    //执行反向画弧和右侧放大动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.75 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         [self rightLineAnimationFrome:0 to:1];
         [self circleEndAnimationFrome:1 to:0];
@@ -194,7 +198,6 @@ static CGFloat positionDuration = 0.3;
     positionAnimation.fromValue = @(layer.position.y);
     positionAnimation.toValue = @(layer.position.y + yChange);
     positionAnimation.autoreverses = YES;
-    [positionAnimation setValue:@"positionKey" forKey:@"animationName"];
     [layer addAnimation:positionAnimation forKey:nil];
 }
 
@@ -211,7 +214,7 @@ static CGFloat positionDuration = 0.3;
  */
 - (void)leftLineAnimationFrome:(CGFloat)fromeValue to:(CGFloat)toValue {
     
-    [self strokeEndAnimationFrom:fromeValue to:toValue onLayer:_leftLineLayer name:leftLineAnimation duration:animationDuration/2 delegate:nil];
+    [self strokeEndAnimationFrom:fromeValue to:toValue onLayer:_leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
 }
 
 /**
@@ -220,8 +223,6 @@ static CGFloat positionDuration = 0.3;
 - (void)rightLineAnimationFrome:(CGFloat)fromeValue to:(CGFloat)toValue {
     [self strokeEndAnimationFrom:fromeValue to:toValue onLayer:_rightLineLayer name:RightLineAnimation duration:animationDuration/4 delegate:self];
 }
-
-
 
 /**
  画弧改变终止位置动画
@@ -241,7 +242,6 @@ static CGFloat positionDuration = 0.3;
     circleAnimation.toValue = @(toValue);
     circleAnimation.fillMode = kCAFillModeForwards;
     circleAnimation.removedOnCompletion = NO;
-    [circleAnimation setValue:@"circleAnimation" forKey:@"animationName"];
     [_circleLayer addAnimation:circleAnimation forKey:nil];
 }
 
@@ -291,6 +291,10 @@ static CGFloat positionDuration = 0.3;
     return strokeEndAnimation;
 }
 
+- (CGFloat)lineWidth {
+    return self.bounds.size.width * 0.2;
+}
+
 
 #pragma mark -
 #pragma mark Setter
@@ -301,8 +305,8 @@ static CGFloat positionDuration = 0.3;
     if (buttonState == XLPlayButtonStatePlay) {
         _isAnimating = true;
         //先执行左右竖线位移动画
-        [self positionAnimationOfLayer:_leftLineLayer :20 duration:positionDuration];
-        [self positionAnimationOfLayer:_rightLineLayer :-20 duration:positionDuration];
+        [self positionAnimationOfLayer:_leftLineLayer :0.2*self.bounds.size.width duration:positionDuration];
+        [self positionAnimationOfLayer:_rightLineLayer :-0.2*self.bounds.size.width duration:positionDuration];
         //再执行画弧、画三角动画
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
             [self actionPositiveAnimation];
@@ -313,15 +317,14 @@ static CGFloat positionDuration = 0.3;
         [self actionInverseAnimation];
         //在执行竖线位移动画，结束动动画要比开始动画块
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-            [self positionAnimationOfLayer:_leftLineLayer :20 duration:positionDuration*0.7];
-            [self positionAnimationOfLayer:_rightLineLayer :-20 duration:positionDuration*0.7];
+            [self positionAnimationOfLayer:_leftLineLayer :0.2*self.bounds.size.width duration:positionDuration*0.7];
+            [self positionAnimationOfLayer:_rightLineLayer :-0.2*self.bounds.size.width duration:positionDuration*0.7];
         });
     }
     //更新动画执行状态
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  (positionDuration + animationDuration) * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         _isAnimating = false;
     });
-
 }
 
 

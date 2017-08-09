@@ -18,7 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _playButton = [[XLPlayButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100) state:XLPlayButtonStatePause];
+    _playButton = [[XLPlayButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35) state:XLPlayButtonStatePause];
+    _playButton.center = self.view.center;
     [_playButton addTarget:self action:@selector(playMethod) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_playButton];
 }
