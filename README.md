@@ -14,7 +14,7 @@
 * XLPlayButton 是继承UIButton的，只是创建方式和UIButton不同，其他的使用方法均一致。
 * 创建方法
 ```objc
-    _playButton = [[XLPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60) state:XLPlayButtonStatePause];
+_playButton = [[XLPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60) state:XLPlayButtonStatePause];
 ```
 * 唯一属性
 ```objc
