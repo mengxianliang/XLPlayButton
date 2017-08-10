@@ -1,12 +1,12 @@
 //
-//  XLPlayButton.m
+//  iQiYiPlayButton.m
 //  XLPlayButtonExample
 //
 //  Created by MengXianLiang on 2017/8/9.
 //  Copyright © 2017年 mxl. All rights reserved.
 //
 
-#import "XLPlayButton.h"
+#import "iQiYiPlayButton.h"
 
 //其它动画时长
 static CGFloat animationDuration = 0.5f;
@@ -19,7 +19,7 @@ static CGFloat positionDuration = 0.3f;
 //右侧直线动画名称
 #define RightLineAnimation @"RightLineAnimation"
 
-@interface XLPlayButton ()<CAAnimationDelegate> {
+@interface iQiYiPlayButton ()<CAAnimationDelegate> {
     
     //是否正在执行动画
     BOOL _isAnimating;
@@ -35,12 +35,12 @@ static CGFloat positionDuration = 0.3f;
 }
 @end
 
-@implementation XLPlayButton
+@implementation iQiYiPlayButton
 
-- (instancetype)initWithFrame:(CGRect)frame state:(XLPlayButtonState)state{
+- (instancetype)initWithFrame:(CGRect)frame state:(iQiYiPlayButtonState)state{
     if (self = [super initWithFrame:frame]) {
         [self buildUI];
-        if (state == XLPlayButtonStatePlay) {
+        if (state == iQiYiPlayButtonStatePlay) {
             self.buttonState = state;
         }
     }
@@ -51,7 +51,7 @@ static CGFloat positionDuration = 0.3f;
  创建UI
  */
 - (void)buildUI {
-    _buttonState = XLPlayButtonStatePause;
+    _buttonState = iQiYiPlayButtonStatePause;
     [self addTriangleLayer];
     [self addLeftLineLayer];
     [self addRightLineLayer];
@@ -61,7 +61,7 @@ static CGFloat positionDuration = 0.3f;
 
 -(void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-    if (_buttonState == XLPlayButtonStatePause) {
+    if (_buttonState == iQiYiPlayButtonStatePause) {
         [self heigherLineLayer:true];
     }
 }
@@ -282,7 +282,7 @@ static CGFloat positionDuration = 0.3f;
     NSString *name = [anim valueForKey:@"animationName"];
     bool isTriangle = [name isEqualToString:TriangleAnimation];
     bool isRightLine = [name isEqualToString:RightLineAnimation];
-    if (_buttonState == XLPlayButtonStatePlay && isRightLine) {
+    if (_buttonState == iQiYiPlayButtonStatePlay && isRightLine) {
         _rightLineLayer.lineCap = kCALineCapButt;
     } else if (isTriangle) {
         _triangleLayer.lineCap = kCALineCapButt;
@@ -327,11 +327,11 @@ static CGFloat positionDuration = 0.3f;
 
 #pragma mark -
 #pragma mark Setter
-- (void)setButtonState:(XLPlayButtonState)buttonState {
+- (void)setButtonState:(iQiYiPlayButtonState)buttonState {
     //如果正在执行动画则不再执行下面操作
     if (_isAnimating == true) {return;}
     _buttonState = buttonState;
-    if (buttonState == XLPlayButtonStatePlay) {
+    if (buttonState == iQiYiPlayButtonStatePlay) {
         _isAnimating = true;
         //缩小暂停竖线
         [self heigherLineLayer:false];
@@ -341,7 +341,7 @@ static CGFloat positionDuration = 0.3f;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
             [self actionPositiveAnimation];
         });
-    } else if (buttonState == XLPlayButtonStatePause) {
+    } else if (buttonState == iQiYiPlayButtonStatePause) {
         _isAnimating = true;
         //先执行画弧、画三角动画
         [self actionInverseAnimation];

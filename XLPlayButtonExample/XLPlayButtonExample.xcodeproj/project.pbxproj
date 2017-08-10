@@ -7,16 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E650B771F3C7137007126FF /* YouKuPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E650B761F3C7137007126FF /* YouKuPlayButton.m */; };
+		5E650B7B1F3C73B3007126FF /* iQiYiPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E650B7A1F3C73B3007126FF /* iQiYiPlayButton.m */; };
 		5E6F7C891F3ADF04003AF9FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F7C881F3ADF04003AF9FB /* main.m */; };
 		5E6F7C8C1F3ADF04003AF9FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F7C8B1F3ADF04003AF9FB /* AppDelegate.m */; };
 		5E6F7C8F1F3ADF04003AF9FB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F7C8E1F3ADF04003AF9FB /* ViewController.m */; };
 		5E6F7C921F3ADF04003AF9FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E6F7C901F3ADF04003AF9FB /* Main.storyboard */; };
 		5E6F7C941F3ADF04003AF9FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E6F7C931F3ADF04003AF9FB /* Assets.xcassets */; };
 		5E6F7C971F3ADF04003AF9FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E6F7C951F3ADF04003AF9FB /* LaunchScreen.storyboard */; };
-		5E6F7CA41F3AF8DB003AF9FB /* XLPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F7CA31F3AF8DB003AF9FB /* XLPlayButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E650B751F3C7137007126FF /* YouKuPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouKuPlayButton.h; sourceTree = "<group>"; };
+		5E650B761F3C7137007126FF /* YouKuPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouKuPlayButton.m; sourceTree = "<group>"; };
+		5E650B791F3C73B3007126FF /* iQiYiPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iQiYiPlayButton.h; sourceTree = "<group>"; };
+		5E650B7A1F3C73B3007126FF /* iQiYiPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iQiYiPlayButton.m; sourceTree = "<group>"; };
 		5E6F7C841F3ADF04003AF9FB /* XLPlayButtonExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLPlayButtonExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E6F7C881F3ADF04003AF9FB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5E6F7C8A1F3ADF04003AF9FB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -27,8 +32,6 @@
 		5E6F7C931F3ADF04003AF9FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5E6F7C961F3ADF04003AF9FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5E6F7C981F3ADF04003AF9FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5E6F7CA21F3AF8DB003AF9FB /* XLPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLPlayButton.h; sourceTree = "<group>"; };
-		5E6F7CA31F3AF8DB003AF9FB /* XLPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLPlayButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,10 +45,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E650B741F3C7137007126FF /* YouKuPlayButton */ = {
+			isa = PBXGroup;
+			children = (
+				5E650B751F3C7137007126FF /* YouKuPlayButton.h */,
+				5E650B761F3C7137007126FF /* YouKuPlayButton.m */,
+			);
+			path = YouKuPlayButton;
+			sourceTree = "<group>";
+		};
+		5E650B781F3C73B3007126FF /* iQiYiPlayButton */ = {
+			isa = PBXGroup;
+			children = (
+				5E650B791F3C73B3007126FF /* iQiYiPlayButton.h */,
+				5E650B7A1F3C73B3007126FF /* iQiYiPlayButton.m */,
+			);
+			path = iQiYiPlayButton;
+			sourceTree = "<group>";
+		};
 		5E6F7C7B1F3ADF04003AF9FB = {
 			isa = PBXGroup;
 			children = (
-				5E6F7CA11F3AF8DB003AF9FB /* XLPlayButton */,
+				5E650B781F3C73B3007126FF /* iQiYiPlayButton */,
+				5E650B741F3C7137007126FF /* YouKuPlayButton */,
 				5E6F7C861F3ADF04003AF9FB /* XLPlayButtonExample */,
 				5E6F7C851F3ADF04003AF9FB /* Products */,
 			);
@@ -81,15 +103,6 @@
 				5E6F7C881F3ADF04003AF9FB /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5E6F7CA11F3AF8DB003AF9FB /* XLPlayButton */ = {
-			isa = PBXGroup;
-			children = (
-				5E6F7CA21F3AF8DB003AF9FB /* XLPlayButton.h */,
-				5E6F7CA31F3AF8DB003AF9FB /* XLPlayButton.m */,
-			);
-			path = XLPlayButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,9 +177,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E6F7C8F1F3ADF04003AF9FB /* ViewController.m in Sources */,
+				5E650B771F3C7137007126FF /* YouKuPlayButton.m in Sources */,
+				5E650B7B1F3C73B3007126FF /* iQiYiPlayButton.m in Sources */,
 				5E6F7C8C1F3ADF04003AF9FB /* AppDelegate.m in Sources */,
 				5E6F7C891F3ADF04003AF9FB /* main.m in Sources */,
-				5E6F7CA41F3AF8DB003AF9FB /* XLPlayButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
