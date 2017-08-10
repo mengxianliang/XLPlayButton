@@ -1,7 +1,11 @@
 # XLPlayButton
-爱奇艺播放、暂停按钮动画效果
 
-### 显示效果
+
+### 爱奇艺播放、暂停按钮动画效果
+
+![image](https://github.com/mengxianliang/XLPlayButton/blob/master/GIF/1.gif)
+
+### 优酷播放、暂停按钮动画效果
 
 ![image](https://github.com/mengxianliang/XLPlayButton/blob/master/GIF/1.gif)
 
@@ -14,7 +18,7 @@
 * XLPlayButton 是继承UIButton的，只是创建方式和UIButton不同，其他的使用方法均一致。
 * 创建方法
 ```objc
-_playButton = [[XLPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60) state:XLPlayButtonStatePause];
+_iQiYiPlayButton = [[iQiYiPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60) state:iQiYiPlayButtonStatePlay];
 ```
 * 唯一属性
 ```objc
@@ -24,6 +28,17 @@ _playButton = [[XLPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60) state
  设置XLPlayButtonStatePause显示暂停按钮
  */
 @property (nonatomic, assign) XLPlayButtonState buttonState;
+```
+* 切换状态方法
+```objc
+- (void)iQiYiPlayMethod {
+    //通过判断当前状态 切换显示状态
+    if (_iQiYiPlayButton.buttonState == iQiYiPlayButtonStatePause) {
+        _iQiYiPlayButton.buttonState = iQiYiPlayButtonStatePlay;
+    }else {
+        _iQiYiPlayButton.buttonState = iQiYiPlayButtonStatePause;
+    }
+}
 ```
 
 ### 个人开发过的UI工具集合 [XLUIKit](https://github.com/mengxianliang/XLUIKit)
