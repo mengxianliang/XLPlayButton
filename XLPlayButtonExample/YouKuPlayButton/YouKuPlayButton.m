@@ -145,20 +145,21 @@ static CGFloat animationDuration = 0.35f;
     CGFloat a = self.layer.bounds.size.width;
     
     _triangleCotainer = [CALayer layer];
-    _triangleCotainer.bounds = CGRectMake(0, 0, 0.4*a, 0.4*a);
-    _triangleCotainer.position = CGPointMake(a/2, a/2);
+    _triangleCotainer.bounds = CGRectMake(0, 0, 0.4*a, 0.35*a);
+    _triangleCotainer.position = CGPointMake(a*0.5, a*0.55);
     _triangleCotainer.opacity = 0;
     [self.layer addSublayer:_triangleCotainer];
     
     CGFloat b = _triangleCotainer.bounds.size.width;
+    CGFloat c = _triangleCotainer.bounds.size.height;
     
     UIBezierPath *path1 = [UIBezierPath bezierPath];
     [path1 moveToPoint:CGPointMake(0,0)];
-    [path1 addLineToPoint:CGPointMake(b/2,b)];
+    [path1 addLineToPoint:CGPointMake(b/2,c)];
     
     UIBezierPath *path2 = [UIBezierPath bezierPath];
     [path2 moveToPoint:CGPointMake(b,0)];
-    [path2 addLineToPoint:CGPointMake(b/2,b)];
+    [path2 addLineToPoint:CGPointMake(b/2,c)];
     
     CAShapeLayer *layer1 = [CAShapeLayer layer];
     layer1.path = path1.CGPath;
