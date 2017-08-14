@@ -88,8 +88,6 @@ static CGFloat positionDuration = 0.3f;
     _leftLineLayer.lineJoin = kCALineJoinRound;
     
     [self.layer addSublayer:_leftLineLayer];
-    
-    NSLog(@"_left.layer.positionY = %f",path.currentPoint.y);
 }
 
 /**
