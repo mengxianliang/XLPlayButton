@@ -169,7 +169,7 @@ static CGFloat positionDuration = 0.3f;
     [self circleEndAnimationFrom:0 to:1];
     //开始逆向画弧动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        [self circleStartAnimationFrome:0 to:1];
+        [self circleStartAnimationFrom:0 to:1];
     });
     //开始左侧线条缩短动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
@@ -187,7 +187,7 @@ static CGFloat positionDuration = 0.3f;
     [self leftLineAnimationFrom:0 to:1];
     //执行画弧动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        [self circleStartAnimationFrome:1 to:0];
+        [self circleStartAnimationFrom:1 to:0];
     });
     //执行反向画弧和右侧放大动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.75 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
@@ -250,10 +250,10 @@ static CGFloat positionDuration = 0.3f;
 /**
  画弧改变起始位置动画
  */
-- (void)circleStartAnimationFrome:(CGFloat)fromeValue to:(CGFloat)toValue {
+- (void)circleStartAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
     CABasicAnimation *circleAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
     circleAnimation.duration = animationDuration/4;
-    circleAnimation.fromValue = @(fromeValue);
+    circleAnimation.fromValue = @(fromValue);
     circleAnimation.toValue = @(toValue);
     circleAnimation.fillMode = kCAFillModeForwards;
     circleAnimation.removedOnCompletion = NO;
@@ -292,10 +292,10 @@ static CGFloat positionDuration = 0.3f;
 /**
  通用执行strokeEnd动画
  */
-- (CABasicAnimation *)strokeEndAnimationFrom:(CGFloat)fromeValue to:(CGFloat)toValue onLayer:(CALayer *)layer name:(NSString*)animationName duration:(CGFloat)duration delegate:(id)delegate {
+- (CABasicAnimation *)strokeEndAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue onLayer:(CALayer *)layer name:(NSString*)animationName duration:(CGFloat)duration delegate:(id)delegate {
     CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     strokeEndAnimation.duration = duration;
-    strokeEndAnimation.fromValue = @(fromeValue);
+    strokeEndAnimation.fromValue = @(fromValue);
     strokeEndAnimation.toValue = @(toValue);
     strokeEndAnimation.fillMode = kCAFillModeForwards;
     strokeEndAnimation.removedOnCompletion = NO;
