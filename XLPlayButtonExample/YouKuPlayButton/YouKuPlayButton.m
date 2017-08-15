@@ -187,10 +187,10 @@ static CGFloat animationDuration = 0.35f;
 /**
  通用执行strokeEnd动画
  */
-- (CABasicAnimation *)strokeEndAnimationFrom:(CGFloat)fromeValue to:(CGFloat)toValue onLayer:(CALayer *)layer name:(NSString*)animationName duration:(CGFloat)duration delegate:(id)delegate {
+- (CABasicAnimation *)strokeEndAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue onLayer:(CALayer *)layer name:(NSString*)animationName duration:(CGFloat)duration delegate:(id)delegate {
     CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     strokeEndAnimation.duration = duration;
-    strokeEndAnimation.fromValue = @(fromeValue);
+    strokeEndAnimation.fromValue = @(fromValue);
     strokeEndAnimation.toValue = @(toValue);
     strokeEndAnimation.fillMode = kCAFillModeForwards;
     strokeEndAnimation.removedOnCompletion = NO;
