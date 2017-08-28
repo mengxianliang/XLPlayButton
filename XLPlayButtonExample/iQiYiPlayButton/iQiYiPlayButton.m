@@ -58,38 +58,8 @@ static CGFloat positionDuration = 0.3f;
     [self addCircleLayer];
 }
 
-
--(void)willMoveToSuperview:(UIView *)newSuperview {
-    [super willMoveToSuperview:newSuperview];
-    if (_buttonState == iQiYiPlayButtonStatePause) {
-        [self heigherLineLayer:true];
-    }
-}
-
 #pragma mark -
 #pragma mark 添加动画层
-
-/**
- 添加左侧竖线层
- */
-- (void)addLeftLineLayer {
-    CGFloat a = self.bounds.size.width;
-    
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(a*0.2,a*0.2)];
-    [path addLineToPoint:CGPointMake(a*0.2,a*0.8)];
-    
-    _leftLineLayer = [CAShapeLayer layer];
-    _leftLineLayer.path = path.CGPath;
-    _leftLineLayer.fillColor = [UIColor clearColor].CGColor;
-    _leftLineLayer.strokeColor = LineColor.CGColor;
-    _leftLineLayer.lineWidth = [self lineWidth];
-    _leftLineLayer.lineCap = kCALineCapRound;
-    _leftLineLayer.lineJoin = kCALineJoinRound;
-    
-    [self.layer addSublayer:_leftLineLayer];
-}
-
 /**
  添加三角层
  */
@@ -115,6 +85,27 @@ static CGFloat positionDuration = 0.3f;
 }
 
 /**
+ 添加左侧竖线层
+ */
+- (void)addLeftLineLayer {
+    CGFloat a = self.bounds.size.width;
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(a*0.2,0)];
+    [path addLineToPoint:CGPointMake(a*0.2,a)];
+    
+    _leftLineLayer = [CAShapeLayer layer];
+    _leftLineLayer.path = path.CGPath;
+    _leftLineLayer.fillColor = [UIColor clearColor].CGColor;
+    _leftLineLayer.strokeColor = LineColor.CGColor;
+    _leftLineLayer.lineWidth = [self lineWidth];
+    _leftLineLayer.lineCap = kCALineCapRound;
+    _leftLineLayer.lineJoin = kCALineJoinRound;
+    
+    [self.layer addSublayer:_leftLineLayer];
+}
+
+/**
  添加右侧竖线层
  */
 - (void)addRightLineLayer {
@@ -122,8 +113,8 @@ static CGFloat positionDuration = 0.3f;
     CGFloat a = self.bounds.size.width;
     
     UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(a*0.8,a*0.8)];
-    [path addLineToPoint:CGPointMake(a*0.8,a*0.2)];
+    [path moveToPoint:CGPointMake(a*0.8,a)];
+    [path addLineToPoint:CGPointMake(a*0.8,0)];
     
     _rightLineLayer = [CAShapeLayer layer];
     _rightLineLayer.path = path.CGPath;
@@ -135,7 +126,7 @@ static CGFloat positionDuration = 0.3f;
     [self.layer addSublayer:_rightLineLayer];
 }
 /**
- 添加弧线过渡层
+ 添加弧线过渡弧线层
  */
 - (void)addCircleLayer {
     
@@ -197,27 +188,6 @@ static CGFloat positionDuration = 0.3f;
 }
 
 /**
- 位移变化动画
- */
--(void)actionPositionAnimationDuration:(CGFloat)duration {
-    CGFloat yChange = 0.2*self.bounds.size.width;
-    CABasicAnimation *leftLinePositionAnimation = [CABasicAnimation animationWithKeyPath:@"position.y"];
-    leftLinePositionAnimation.duration = duration/2;
-    leftLinePositionAnimation.fromValue = @(_leftLineLayer.position.y);
-    leftLinePositionAnimation.toValue = @(_leftLineLayer.position.y + yChange);
-    leftLinePositionAnimation.autoreverses = YES;
-    [_leftLineLayer addAnimation:leftLinePositionAnimation forKey:nil];
-    
-    CABasicAnimation *rightLinePositionAnimation = [CABasicAnimation animationWithKeyPath:@"position.y"];
-    rightLinePositionAnimation.duration = duration/2;
-    rightLinePositionAnimation.fromValue = @(_rightLineLayer.position.y);
-    rightLinePositionAnimation.toValue = @(_rightLineLayer.position.y - yChange);
-    rightLinePositionAnimation.autoreverses = YES;
-    [_rightLineLayer addAnimation:rightLinePositionAnimation forKey:nil];
-}
-
-
-/**
  三角形动画
  */
 - (void)triangleAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
@@ -245,6 +215,22 @@ static CGFloat positionDuration = 0.3f;
 - (void)circleEndAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
     
     [self strokeEndAnimationFrom:fromValue to:toValue onLayer:_circleLayer name:nil duration:animationDuration/4 delegate:nil];
+}
+
+/**
+ 通用执行strokeEnd动画
+ */
+- (CABasicAnimation *)strokeEndAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue onLayer:(CALayer *)layer name:(NSString*)animationName duration:(CGFloat)duration delegate:(id)delegate {
+    CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    strokeEndAnimation.duration = duration;
+    strokeEndAnimation.fromValue = @(fromValue);
+    strokeEndAnimation.toValue = @(toValue);
+    strokeEndAnimation.fillMode = kCAFillModeForwards;
+    strokeEndAnimation.removedOnCompletion = NO;
+    [strokeEndAnimation setValue:animationName forKey:@"animationName"];
+    strokeEndAnimation.delegate = delegate;
+    [layer addAnimation:strokeEndAnimation forKey:nil];
+    return strokeEndAnimation;
 }
 
 /**
@@ -289,38 +275,95 @@ static CGFloat positionDuration = 0.3f;
 
 #pragma mark -
 #pragma mark 其他方法
-/**
- 通用执行strokeEnd动画
- */
-- (CABasicAnimation *)strokeEndAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue onLayer:(CALayer *)layer name:(NSString*)animationName duration:(CGFloat)duration delegate:(id)delegate {
-    CABasicAnimation *strokeEndAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndAnimation.duration = duration;
-    strokeEndAnimation.fromValue = @(fromValue);
-    strokeEndAnimation.toValue = @(toValue);
-    strokeEndAnimation.fillMode = kCAFillModeForwards;
-    strokeEndAnimation.removedOnCompletion = NO;
-    [strokeEndAnimation setValue:animationName forKey:@"animationName"];
-    strokeEndAnimation.delegate = delegate;
-    [layer addAnimation:strokeEndAnimation forKey:nil];
-    return strokeEndAnimation;
-}
-
 //线条宽度，根据按钮的宽度按比例设置
 - (CGFloat)lineWidth {
     return self.bounds.size.width * 0.2;
 }
 
-//加长暂停竖线
-- (void)heigherLineLayer:(BOOL)heigher{
-    CATransform3D t = CATransform3DIdentity;
-    if (heigher) {
-        t = CATransform3DScale(t, 1, 1.25, 0);
-    } else {
-        t = CATransform3DScale(t, 1, 1, 0);
-    }
-    _leftLineLayer.transform = t;
-    _rightLineLayer.transform = t;
+
+#pragma mark -
+#pragma mark 竖线动画
+//暂停-》播放竖线动画
+- (void)linePositiveAnimation {
+    CGFloat a = self.bounds.size.width;
+    
+    //左侧缩放动画
+    UIBezierPath *leftPath1 = [UIBezierPath bezierPath];
+    [leftPath1 moveToPoint:CGPointMake(0.2*a,0.4*a)];
+    [leftPath1 addLineToPoint:CGPointMake(0.2*a,a)];
+    _leftLineLayer.path = leftPath1.CGPath;
+    [_leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+    
+    //右侧竖线位移动画
+    UIBezierPath *rightPath1 = [UIBezierPath bezierPath];
+    [rightPath1 moveToPoint:CGPointMake(0.8*a, 0.8*a)];
+    [rightPath1 addLineToPoint:CGPointMake(0.8*a,-0.2*a)];
+    _rightLineLayer.path = rightPath1.CGPath;
+    [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        //左侧位移动画
+        UIBezierPath *leftPath2 = [UIBezierPath bezierPath];
+        [leftPath2 moveToPoint:CGPointMake(a*0.2,a*0.2)];
+        [leftPath2 addLineToPoint:CGPointMake(a*0.2,a*0.8)];
+        _leftLineLayer.path = leftPath2.CGPath;
+        [_leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+        
+        //右侧竖线缩放动画
+        UIBezierPath *rightPath2 = [UIBezierPath bezierPath];
+        [rightPath2 moveToPoint:CGPointMake(a*0.8,a*0.8)];
+        [rightPath2 addLineToPoint:CGPointMake(a*0.8,a*0.2)];
+        _rightLineLayer.path = rightPath2.CGPath;
+        [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+    });
 }
+
+//播放-》暂停竖线动画
+- (void)lineInverseAnimation {
+    
+    CGFloat a = self.bounds.size.width;
+    //左侧位移动画
+    UIBezierPath *leftPath1 = [UIBezierPath bezierPath];
+    [leftPath1 moveToPoint:CGPointMake(0.2*a,0.4*a)];
+    [leftPath1 addLineToPoint:CGPointMake(0.2*a,a)];
+    _leftLineLayer.path = leftPath1.CGPath;
+    [_leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+    
+    //右侧竖线位移动画
+    UIBezierPath *rightPath1 = [UIBezierPath bezierPath];
+    [rightPath1 moveToPoint:CGPointMake(0.8*a, 0.8*a)];
+    [rightPath1 addLineToPoint:CGPointMake(0.8*a,-0.2*a)];
+    _rightLineLayer.path = rightPath1.CGPath;
+    [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        //左侧竖线缩放动画
+        UIBezierPath *leftPath2 = [UIBezierPath bezierPath];
+        [leftPath2 moveToPoint:CGPointMake(a*0.2,0)];
+        [leftPath2 addLineToPoint:CGPointMake(a*0.2,a)];
+        _leftLineLayer.path = leftPath2.CGPath;
+        [_leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+        
+        //右侧竖线缩放动画
+        UIBezierPath *rightPath2 = [UIBezierPath bezierPath];
+        [rightPath2 moveToPoint:CGPointMake(a*0.8,a)];
+        [rightPath2 addLineToPoint:CGPointMake(a*0.8,0)];
+        _rightLineLayer.path = rightPath2.CGPath;
+        [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+    });
+}
+
+/**
+ 通用path动画方法
+ */
+- (CABasicAnimation *)pathAnimationWithDuration:(CGFloat)duration {
+    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    pathAnimation.duration = duration;
+    pathAnimation.fillMode = kCAFillModeForwards;
+    pathAnimation.removedOnCompletion = NO;
+    return pathAnimation;
+}
+
 
 
 #pragma mark -
@@ -329,25 +372,23 @@ static CGFloat positionDuration = 0.3f;
     //如果正在执行动画则不再执行下面操作
     if (_isAnimating == true) {return;}
     _buttonState = buttonState;
-    if (buttonState == iQiYiPlayButtonStatePlay) {
+    
+    if (buttonState == iQiYiPlayButtonStatePlay) {//暂停-》播放
         _isAnimating = true;
-        //缩小暂停竖线
-        [self heigherLineLayer:false];
-        //先执行左右竖线位移动画
-        [self actionPositionAnimationDuration:positionDuration];
+        //竖线正向动画
+        [self linePositiveAnimation];
         //再执行画弧、画三角动画
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
             [self actionPositiveAnimation];
         });
-    } else if (buttonState == iQiYiPlayButtonStatePause) {
+    } else if (buttonState == iQiYiPlayButtonStatePause) {//播放-》暂停
         _isAnimating = true;
         //先执行画弧、画三角动画
         [self actionInverseAnimation];
         //在执行竖线位移动画，结束动动画要比开始动画块
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-            //放大暂停竖线
-            [self heigherLineLayer:true];
-            [self actionPositionAnimationDuration:0.7*positionDuration];
+            //竖线逆向动画
+            [self lineInverseAnimation];
         });
     }
     //更新动画执行状态
@@ -355,7 +396,6 @@ static CGFloat positionDuration = 0.3f;
         _isAnimating = false;
     });
 }
-
 
 
 @end
