@@ -43,6 +43,6 @@ _iQiYiPlayButton = [[iQiYiPlayButton alloc] initWithFrame:CGRectMake(0, 0, 60, 6
 
 ### 优酷播放按钮动画实现原理 [CSDN](http://blog.csdn.net/u013282507/article/details/77247437) / [简书](http://www.jianshu.com/p/32e7becf1a92)
 
-### 爱奇艺播放按钮动画实现原理 [简书](http://www.jianshu.com/p/3546964996ff)
+### 爱奇艺播放按钮动画实现原理 [CSDN](http://blog.csdn.net/u013282507/article/details/77676294) / [简书](http://www.jianshu.com/p/3546964996ff)
 
 ### 个人开发过的UI工具集合 [XLUIKit](https://github.com/mengxianliang/XLUIKit)
