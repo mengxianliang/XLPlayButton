@@ -153,18 +153,19 @@ static CGFloat positionDuration = 0.3f;
  */
 - (void)actionPositiveAnimation {
     //开始三角动画
-    [self triangleAnimationFrom:0 to:1];
+    [self strokeEndAnimationFrom:0 to:1 onLayer:_triangleLayer name:TriangleAnimation duration:animationDuration delegate:self];
     //开始右侧线条动画
-    [self rightLineAnimationFrom:1 to:0];
+    [self strokeEndAnimationFrom:1 to:0 onLayer:_rightLineLayer name:RightLineAnimation duration:animationDuration/4 delegate:self];
     //开始画弧动画
-    [self circleEndAnimationFrom:0 to:1];
+    [self strokeEndAnimationFrom:0 to:1 onLayer:_circleLayer name:nil duration:animationDuration/4 delegate:nil];
     //开始逆向画弧动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         [self circleStartAnimationFrom:0 to:1];
     });
     //开始左侧线条缩短动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        [self leftLineAnimationFrom:1 to:0];
+        //左侧竖线动画
+        [self strokeEndAnimationFrom:1 to:0 onLayer:_leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
     });
 }
 
@@ -173,48 +174,20 @@ static CGFloat positionDuration = 0.3f;
  */
 - (void)actionInverseAnimation {
     //开始三角动画
-    [self triangleAnimationFrom:1 to:0];
+    [self strokeEndAnimationFrom:1 to:0 onLayer:_triangleLayer name:TriangleAnimation duration:animationDuration delegate:self];
     //开始左侧线条动画
-    [self leftLineAnimationFrom:0 to:1];
+    [self strokeEndAnimationFrom:0 to:1 onLayer:_leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
     //执行画弧动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         [self circleStartAnimationFrom:1 to:0];
     });
     //执行反向画弧和右侧放大动画
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.75 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        [self rightLineAnimationFrom:0 to:1];
-        [self circleEndAnimationFrom:1 to:0];
+        //右侧竖线动画
+        [self strokeEndAnimationFrom:0 to:1 onLayer:_rightLineLayer name:RightLineAnimation duration:animationDuration/4 delegate:self];
+        //圆弧动画
+        [self strokeEndAnimationFrom:1 to:0 onLayer:_circleLayer name:nil duration:animationDuration/4 delegate:nil];
     });
-}
-
-/**
- 三角形动画
- */
-- (void)triangleAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
-    [self strokeEndAnimationFrom:fromValue to:toValue onLayer:_triangleLayer name:TriangleAnimation duration:animationDuration delegate:self];
-}
-
-/**
- 左侧竖条动画
- */
-- (void)leftLineAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
-    
-    [self strokeEndAnimationFrom:fromValue to:toValue onLayer:_leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
-}
-
-/**
- 右侧竖线动画
- */
-- (void)rightLineAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
-    [self strokeEndAnimationFrom:fromValue to:toValue onLayer:_rightLineLayer name:RightLineAnimation duration:animationDuration/4 delegate:self];
-}
-
-/**
- 画弧改变终止位置动画
- */
-- (void)circleEndAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue {
-    
-    [self strokeEndAnimationFrom:fromValue to:toValue onLayer:_circleLayer name:nil duration:animationDuration/4 delegate:nil];
 }
 
 /**
