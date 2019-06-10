@@ -9,12 +9,12 @@
 #import "ViewController.h"
 #import "iQiYiPlayButton.h"
 #import "YouKuPlayButton.h"
-@interface ViewController (){
-    
-    iQiYiPlayButton *_iQiYiPlayButton;
-    
-    YouKuPlayButton *_youKuPlayButton;
-}
+@interface ViewController ()
+
+@property (nonatomic, strong) iQiYiPlayButton *iQiYiPlayButton;
+
+@property (nonatomic, strong) YouKuPlayButton *youKuPlayButton;
+
 @end
 
 @implementation ViewController
@@ -55,7 +55,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 

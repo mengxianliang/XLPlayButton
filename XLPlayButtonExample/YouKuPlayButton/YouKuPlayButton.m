@@ -15,16 +15,21 @@ static CGFloat animationDuration = 0.35f;
 #define LightBLueColor [UIColor colorWithRed:87/255.0 green:188/255.0 blue:253/255.0 alpha:1]
 #define RedColor [UIColor colorWithRed:228/255.0 green:35/255.0 blue:6/255.0 alpha:0.8]
 
-@interface YouKuPlayButton () {
-    CAShapeLayer *_leftLineLayer;
-    CAShapeLayer *_leftCircle;
-    CAShapeLayer *_rightLineLayer;
-    CAShapeLayer *_rightCircle;
-    //三角播放按钮容器
-    CALayer *_triangleCotainer;
-    //是否正在执行动画
-    BOOL _isAnimating;
-}
+@interface YouKuPlayButton ()
+
+@property (nonatomic, strong) CAShapeLayer *leftLineLayer;
+
+@property (nonatomic, strong) CAShapeLayer *leftCircle;
+
+@property (nonatomic, strong) CAShapeLayer *rightLineLayer;
+
+@property (nonatomic, strong) CAShapeLayer *rightCircle;
+
+//三角播放按钮容器
+@property (nonatomic, strong) CALayer *triangleCotainer;
+//是否正在执行动画
+@property (nonatomic, assign) BOOL isAnimating;
+
 @end
 
 @implementation YouKuPlayButton
@@ -257,8 +262,9 @@ static CGFloat animationDuration = 0.35f;
         [self showPauseAnimation];
     }
     //更新动画执行状态
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  (animationDuration) * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        _isAnimating = false;
+        weakSelf.isAnimating = false;
     });
 }
 /**
@@ -292,10 +298,13 @@ static CGFloat animationDuration = 0.35f;
     //旋转动画
     [self actionRotateAnimationClockwise:true];
     //收到一半再放直线
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        [self strokeEndAnimationFrom:0 to:1 onLayer:_leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
-        [self strokeEndAnimationFrom:0 to:1 onLayer:_rightLineLayer name:nil duration:animationDuration/2 delegate:nil];
+        [self strokeEndAnimationFrom:0 to:1 onLayer:weakSelf.leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
+        [self strokeEndAnimationFrom:0 to:1 onLayer:weakSelf.rightLineLayer name:nil duration:animationDuration/2 delegate:nil];
     });
 }
+
+
 
 @end

@@ -19,20 +19,19 @@ static CGFloat positionDuration = 0.3f;
 //右侧直线动画名称
 #define RightLineAnimation @"RightLineAnimation"
 
-@interface iQiYiPlayButton ()<CAAnimationDelegate> {
-    
-    //是否正在执行动画
-    BOOL _isAnimating;
-    
-    //左侧竖条
-    CAShapeLayer *_leftLineLayer;
-    //三角
-    CAShapeLayer *_triangleLayer;
-    //右侧竖条
-    CAShapeLayer *_rightLineLayer;
-    //画弧layer
-    CAShapeLayer *_circleLayer;
-}
+@interface iQiYiPlayButton ()<CAAnimationDelegate>
+//左侧竖条
+@property (nonatomic, strong) CAShapeLayer *leftLineLayer;
+//三角
+@property (nonatomic, strong) CAShapeLayer *triangleLayer;
+//右侧竖条
+@property (nonatomic, strong) CAShapeLayer *rightLineLayer;
+//画弧layer
+@property (nonatomic, strong) CAShapeLayer *circleLayer;
+
+//是否正在执行动画
+@property (nonatomic, assign) BOOL isAnimating;
+
 @end
 
 @implementation iQiYiPlayButton
@@ -163,9 +162,10 @@ static CGFloat positionDuration = 0.3f;
         [self circleStartAnimationFrom:0 to:1];
     });
     //开始左侧线条缩短动画
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         //左侧竖线动画
-        [self strokeEndAnimationFrom:1 to:0 onLayer:_leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
+        [self strokeEndAnimationFrom:1 to:0 onLayer:weakSelf.leftLineLayer name:nil duration:animationDuration/2 delegate:nil];
     });
 }
 
@@ -182,11 +182,12 @@ static CGFloat positionDuration = 0.3f;
         [self circleStartAnimationFrom:1 to:0];
     });
     //执行反向画弧和右侧放大动画
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animationDuration*0.75 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         //右侧竖线动画
-        [self strokeEndAnimationFrom:0 to:1 onLayer:_rightLineLayer name:RightLineAnimation duration:animationDuration/4 delegate:self];
+        [self strokeEndAnimationFrom:0 to:1 onLayer:weakSelf.rightLineLayer name:RightLineAnimation duration:animationDuration/4 delegate:self];
         //圆弧动画
-        [self strokeEndAnimationFrom:1 to:0 onLayer:_circleLayer name:nil duration:animationDuration/4 delegate:nil];
+        [self strokeEndAnimationFrom:1 to:0 onLayer:weakSelf.circleLayer name:nil duration:animationDuration/4 delegate:nil];
     });
 }
 
@@ -273,21 +274,21 @@ static CGFloat positionDuration = 0.3f;
     [rightPath1 addLineToPoint:CGPointMake(0.8*a,-0.2*a)];
     _rightLineLayer.path = rightPath1.CGPath;
     [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
-    
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         //左侧位移动画
         UIBezierPath *leftPath2 = [UIBezierPath bezierPath];
         [leftPath2 moveToPoint:CGPointMake(a*0.2,a*0.2)];
         [leftPath2 addLineToPoint:CGPointMake(a*0.2,a*0.8)];
-        _leftLineLayer.path = leftPath2.CGPath;
-        [_leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+        weakSelf.leftLineLayer.path = leftPath2.CGPath;
+        [weakSelf.leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
         
         //右侧竖线缩放动画
         UIBezierPath *rightPath2 = [UIBezierPath bezierPath];
         [rightPath2 moveToPoint:CGPointMake(a*0.8,a*0.8)];
         [rightPath2 addLineToPoint:CGPointMake(a*0.8,a*0.2)];
-        _rightLineLayer.path = rightPath2.CGPath;
-        [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+        weakSelf.rightLineLayer.path = rightPath2.CGPath;
+        [weakSelf.rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
     });
 }
 
@@ -309,20 +310,21 @@ static CGFloat positionDuration = 0.3f;
     _rightLineLayer.path = rightPath1.CGPath;
     [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
     
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  positionDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         //左侧竖线缩放动画
         UIBezierPath *leftPath2 = [UIBezierPath bezierPath];
         [leftPath2 moveToPoint:CGPointMake(a*0.2,0)];
         [leftPath2 addLineToPoint:CGPointMake(a*0.2,a)];
-        _leftLineLayer.path = leftPath2.CGPath;
-        [_leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+        weakSelf.leftLineLayer.path = leftPath2.CGPath;
+        [weakSelf.leftLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
         
         //右侧竖线缩放动画
         UIBezierPath *rightPath2 = [UIBezierPath bezierPath];
         [rightPath2 moveToPoint:CGPointMake(a*0.8,a)];
         [rightPath2 addLineToPoint:CGPointMake(a*0.8,0)];
-        _rightLineLayer.path = rightPath2.CGPath;
-        [_rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
+        weakSelf.rightLineLayer.path = rightPath2.CGPath;
+        [weakSelf.rightLineLayer addAnimation:[self pathAnimationWithDuration:positionDuration/2] forKey:nil];
     });
 }
 
@@ -365,8 +367,9 @@ static CGFloat positionDuration = 0.3f;
         });
     }
     //更新动画执行状态
+    __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  (positionDuration + animationDuration) * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        _isAnimating = false;
+        weakSelf.isAnimating = false;
     });
 }
 
